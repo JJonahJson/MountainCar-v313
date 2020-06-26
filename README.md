@@ -7,7 +7,7 @@ Each of them reaches the flag with a percentage of success of 90% very quickly, 
 
 ## Results
 Best technique: Double DQN\
-The results below comes from one training with Double DQN, the csv file of this run are uploaded with the project.
+The results below come from one training with Double DQN, the csv file of this run are uploaded with the project.
 
 **Solution nearly found at the 816th time step** with average reward of 110.8\
 **Solution found at the 955th time step** with average reward of -109.1\
