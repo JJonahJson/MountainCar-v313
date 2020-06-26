@@ -27,9 +27,6 @@ def play(env, epsilon, train_net, chosen_training, wanna_see, target_net = None,
         
         if observations[0] >= 0.5:
             goal_reached = True
-            '''reward = 10
-        elif observations[0] > -0.4:
-            reward = (1 + observations[0]) ** 2'''
 
         rewards += reward
         if done:
@@ -51,7 +48,9 @@ def play(env, epsilon, train_net, chosen_training, wanna_see, target_net = None,
         if chosen_training is not TrainingMode.DQN:
             step += 1
             if step % copy_step == 0:
-                target_net.copy_weights(train_net)
+                target_net.soft_update_weights(train_net)
+                #target_net.copy_weights(train_net)
+
                 
     return rewards, np.mean(losses), goal_reached
 
@@ -76,8 +75,8 @@ def main():
         # Variables for the training
         hidden_units = [24, 48]  # values represent the input of the hidden layer, the len() output is the number of hidden layers
         lr = 0.001
-        gamma = 0.98
-        batch_size = 128
+        gamma = 0.999
+        batch_size = 256
 
         min_experiences = 100
         max_experiences = 400000
@@ -98,11 +97,13 @@ def main():
             print()
             chosen_training = TrainingMode(int(input()))
             print("\nYou've chose %s!\n" %(chosen_training.name))
+            if chosen_training is TrainingMode.DQN:
+                gamma = 0.98
 
             if args.personalize:
                 print("\nINSERT THE LEARNING RATE (default 0.001): ")
                 lr = float(input())
-                print("\nINSERT THE BATCH SIZE (default 128): ")
+                print("\nINSERT THE BATCH SIZE (default 256): ")
                 batch_size = int(input())
                 print("\nINSERT THE MINIMUM EPSILON VALUE (default 0.01): ")
                 min_epsilon = float(input())
@@ -114,7 +115,7 @@ def main():
                 training_cycles = int(input())
                 print("\nINSERT THE MAXIMUM NUMBER OF SAVED EXPERIENCES (default 400000): ")
                 max_experiences = int(input())
-                print("\nINSERT THE GAMMA VALUE (default 0.98): ")
+                print("\nINSERT THE GAMMA VALUE (default 0.999 per fixed Q targets e double DQN, consigliato 0.98 per DQN): ")
                 gamma = float(input())
                 print("\nINSERT THE NUMBER OF HIDDEN LAYERS (default 2): ")
                 print("Remember that if later you'll want to play you can use only models with the default value of hidden layers, which is 2, with 24 neurons for the first and 48 for the second.\n If you want you can change the model in the play section")
@@ -148,6 +149,10 @@ def main():
         print('\nLET\'S TRAIN!\n')
         try:
             for episode in range(1, training_cycles + 1):
+                '''if episode == 1000:
+                    train_net.batch_size = 128
+                    if chosen_training is not TrainingMode.DQN:
+                        target_net.batch_size = 128'''
 
                 epsilon = max(min_epsilon, epsilon * decay)
 
@@ -165,6 +170,13 @@ def main():
                 total_rewards[episode] = total_reward
 
                 avg_rewards = np.round(total_rewards[max(0, episode - 100): episode].mean(), 5)
+                '''if avg_rewards >= -110:
+                    print('\nPROBLEM SOLVED!\n')
+                    if chosen_training is not TrainingMode.DQN:
+                        target_net.model.save_weights('./checkpoints/{}_target_{}goal_(-{})avg-reward.h5'.format(chosen_training.name, n_goal, np.round(avg_rewards)))
+                    train_net.model.save_weights('./checkpoints/{}_train_{}goal_(-{})avg-reward.h5'.format(chosen_training.name, n_goal, np.round(avg_rewards)))
+                    break'''
+
                 if (episode%100) == 0:
                     perc_goals = n_goal / 100
                 else:
@@ -183,7 +195,7 @@ def main():
                           "AVG REWARD (LAST 100):", avg_rewards, "LOSS: ", loss_mean, 'N°GOAL REACHED', n_goal)
 
                     #Condition to save model's weights
-                    if avg_rewards > -140:
+                    if avg_rewards > -130:
                         if chosen_training is not TrainingMode.DQN:
                             target_net.model.save_weights('./checkpoints/{}_target_{}goal_(-{})avg-reward.h5'.format(chosen_training.name, n_goal, np.round(avg_rewards)))
                         train_net.model.save_weights('./checkpoints/{}_train_{}goal_(-{})avg-reward.h5'.format(chosen_training.name, n_goal, np.round(avg_rewards)))

@@ -31,16 +31,9 @@ class DQNAgent:
         
         
         if chosen_training is TrainingMode.DoubleDQN:
-            values = np.zeros((self.batch_size,))
-            q_values_next = self.predict(states_next)
-            max_action_indexes = [np.argmax(q_values_next[i]) for i in range(self.batch_size)]
-            q_next_target = np.array(target_net.predict(states_next))
-            for i in range(self.batch_size):
-                values[i] = q_next_target[i][max_action_indexes[i]]
-
+            values = np.array(target_net.predict(states_next))[range(self.batch_size), np.argmax(self.predict(states_next), axis=1)]
             actual_values = np.where(dones, rewards, rewards + self.gamma * values)
-                
-        
+
         else:
             value_next = np.max(target_net.predict(states_next), axis=1)
             actual_values = np.where(dones, rewards, rewards+self.gamma*value_next)
@@ -72,3 +65,14 @@ class DQNAgent:
         variables2 = train_net.model.trainable_variables
         for v1, v2 in zip(variables1, variables2):
             v1.assign(v2.numpy())
+
+    def soft_update_weights(self, train_net):
+        tau = 0.1
+        q_network_theta = train_net.model.get_weights()
+        target_network_theta = self.model.get_weights()
+        counter = 0
+        for q_weight, target_weight in zip(q_network_theta, target_network_theta):
+            target_weight = target_weight * (1 - tau) + q_weight * tau
+            target_network_theta[counter] = target_weight
+            counter += 1
+        self.model.set_weights(target_network_theta)
