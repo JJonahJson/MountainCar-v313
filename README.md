@@ -9,9 +9,9 @@ Each of them reaches the flag with a percentage of success of 90% very quickly, 
 Best technique: Double DQN\
 The results below come from one training with Double DQN, the csv file of this run are uploaded with the project.
 
-**Solution nearly found at the 816th time step** with average reward of 110.8\
-**Solution found at the 955th time step** with average reward of -109.1\
-**Best average reward found is -103.5** at the 1235th time step
+**Solution nearly found at the 816<sup>th</sup> time step** with average reward of 110.8\
+**Solution found at the 955<sup>th</sup> time step** with average reward of -109.1\
+**Best average reward found is -103.5** at the 1235<sup>th</sup> time step
 
 
 ## How to install
