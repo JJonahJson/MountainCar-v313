@@ -3,15 +3,15 @@
 
 An implementation with three different techniques: deep Q learning, fixed Q targets and double deep Q learning. 
 
-Each of them reaches a success average of 90% very quickly, but only with fixed Q targets and double Q learning the problem is solved as intended by OpenAI Gym’s GitHub site: getting average reward of -110.0 over 100 consecutive trials.
+Each of them reaches the flag with a percentage of success of 90% very quickly, but only with fixed Q targets and double Q learning the problem is solved as intended by OpenAI Gym’s GitHub site: getting average reward of -110.0 over 100 consecutive trials.
 
 ## Results
-Best technique: Double DQN
+Best technique: Double DQN\
 The results below comes from one training with Double DQN, the csv file of this run are uploaded with the project.
 
-Nearly found solution at: 816th time step with average reward of 110.8
-Solution found at: 955th time step with average reward of -109.1
-Best average reward: -103.5 at the 1235th time step
+**Solution nearly found at the 816th time step** with average reward of 110.8\
+**Solution found at the 955th time step** with average reward of -109.1\
+**Best average reward found is -103.5** at the 1235th time step
 
 
 ## How to install
@@ -40,7 +40,8 @@ pip3 install -r requirements.txt --user
 ```
 
 ## How to launch
-There are two principal launch options: train and play, the first trains your software to solve the MountainCar problem, the second one makes you choose between some of the trained model from the training mode and play the environment with that, be careful to have trained your network at least one time before choosing this mode!
+There are two principal launch options: **train** and **play**, the first trains your software to solve the MountainCar problem, the second one makes you choose between some of the trained model from the training mode and play the environment with that, be careful to have trained your network at least one time before choosing this mode!
+
 ```
 cd /path/to/MountainCar-v312
 python3 main.py -m train
