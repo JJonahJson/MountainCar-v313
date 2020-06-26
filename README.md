@@ -18,7 +18,6 @@ The results below come from one training with Double DQN, the csv file of this r
 Clone the repository:
 ```bash
 git clone https://github.com/JJonahJson/MountainCar-v313.git
-cd /path/to/MountainCar-v313
 ```
 Install python3 and pip3
 ```bash
@@ -36,6 +35,7 @@ sudo add-apt-repository ppa:deadsnakes/ppa
 
 Install the requirements to launch the bot:
 ```bash
+cd /path/to/MountainCar-v313
 pip3 install -r requirements.txt --user
 ```
 
@@ -43,7 +43,7 @@ pip3 install -r requirements.txt --user
 There are two principal launch options: **train** and **play**, the first trains your software to solve the MountainCar problem, the second one makes you choose between some of the trained model from the training mode and play the environment with that, be careful to have trained your network at least one time before choosing this mode!
 
 ```
-cd /path/to/MountainCar-v312
+cd /path/to/MountainCar-v313/code
 python3 main.py -m train
 ```
 The software will ask you which technique you want to train the network.
