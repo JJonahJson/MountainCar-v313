@@ -6,6 +6,8 @@ An implementation with three different techniques: deep Q learning, fixed Q targ
 Each of them reaches the flag with a percentage of success of 90% very quickly, but only with fixed Q targets and double Q learning the problem is solved as intended by OpenAI Gym’s GitHub site: getting average reward of -110.0 over 100 consecutive trials.
 
 ## Results
+![](./mountaincar.gif)
+
 Best technique: Double DQN\
 The results below come from one training with Double DQN, the csv file of this run are uploaded with the project.
 
