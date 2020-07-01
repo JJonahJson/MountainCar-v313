@@ -132,7 +132,7 @@ def main():
             sys.exit(1)
         
         #Variables for the tensorboard statistics
-        current_time = datetime.datetime.now().strftime("%d|%m|%Y-%H:%M:%S")
+        current_time = datetime.datetime.now().strftime("%d_%m_%Y-%H_%M_%S")
         log_dir = 'train_logs/' + chosen_training.name + '-' + current_time
         summary_writer = tf.summary.create_file_writer(log_dir)
 
@@ -234,7 +234,7 @@ def main():
             sys.exit(1)
 
         # Variables for the tensorboard statistics
-        current_time = datetime.datetime.now().strftime("%d|%m|%Y-%H:%M:%S")
+        current_time = datetime.datetime.now().strftime("%d_%m_%Y-%H_%M_%S")
         log_dir = 'play_logs/' + files[file_to_load -1] + '-' + current_time
         summary_writer = tf.summary.create_file_writer(log_dir)
         
